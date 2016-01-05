@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="CPP_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Actor.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Actor.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/AgeCompare.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/AgeCompare.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Cinema.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Cinema.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/CntrCompare.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/CntrCompare.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Director.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Director.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/IDCompare.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/IDCompare.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Inputs.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Inputs.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Movie.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Movie.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Producer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Producer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Professionals.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Professionals.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Screenwriter.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Screenwriter.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/TCPServer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/TCPServer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main.cpp" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="Header Search Paths">
+        <CLASSES>
+          <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+          <root url="file:///usr/local/include" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+          <root url="file:///usr/local/include" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>
