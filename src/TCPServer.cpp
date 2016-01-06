@@ -151,7 +151,7 @@ void *TCPServer::connectionHandler(void *sock_desc) {
         string str(client_message);
         //Convects the input string from the client to a string vector
         vector<string> usrInput = myInputs->getInputVector(str);
-        //Sends the vector to the main server funciton
+        //Sends the vector to the main server function
         string result = cinema->runCinema(usrInput);
         //If the function returned Success
         //Then open this backup file and add in the input line
@@ -194,14 +194,18 @@ void TCPServer::restoreServer(void *ptrCinema) {
     //the Server
     file.open("backup.txt");
     while (getline(file, line)) {
-        if(!inUse) {
+        if (!inUse) {
+            // lock
             pthread_mutex_lock(&lock);
-            if(!inUse){
-                vector<string> vecFromFile = myInputs->getInputVector(line);
-                cinema->runCinema(vecFromFile);
+            if (!inUse) {
+                cinema = Cinema::getInstance();
                 inUse = true;
             }
+            //Release lock
+            pthread_mutex_unlock(&lock);
         }
+        vector<string> vecFromFile = myInputs->getInputVector(line);
+        cinema->runCinema(vecFromFile);
     }
 }
 
