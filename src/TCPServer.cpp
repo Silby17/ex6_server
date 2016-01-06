@@ -13,7 +13,7 @@ int TCPServer::t_client_sock;
 /************************************************************************
  * This is the TCPServer Class constructor		        				*
  ************************************************************************/
-TCPServer::TCPServer(int port){
+TCPServer::TCPServer(int port) {
     newSocket();
     bindTCP(port);
     listenTCP(2);
@@ -24,7 +24,7 @@ TCPServer::TCPServer(int port){
 /************************************************************************
  * This is the TCPServer Class destructor                               *
  ************************************************************************/
-TCPServer::~TCPServer(){ }
+TCPServer::~TCPServer() { }
 
 
 /************************************************************************
@@ -32,7 +32,7 @@ TCPServer::~TCPServer(){ }
  ************************************************************************/
 void TCPServer::newSocket() {
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
-    if(server_socket  < 0){
+    if (server_socket < 0) {
         perror("error creating socket\n");
     }
 }
@@ -41,7 +41,7 @@ void TCPServer::newSocket() {
 /************************************************************************
  * This function will bind to all the IP Address of the host            *
  ************************************************************************/
-void TCPServer::bindTCP(unsigned int server_port){
+void TCPServer::bindTCP(unsigned int server_port) {
     struct sockaddr_in server;
     memset(&server, 0, sizeof(server));
     server.sin_family = AF_INET;
@@ -61,7 +61,7 @@ void TCPServer::bindTCP(unsigned int server_port){
 /************************************************************************
  * This function will wait for incoming transmissions                   *
  ************************************************************************/
-void TCPServer::listenTCP(int back_log){
+void TCPServer::listenTCP(int back_log) {
     //The Host waits for incoming transmission
     if (listen(server_socket, back_log) < 0) {
         perror("error listening to socket\n");
@@ -73,8 +73,8 @@ void TCPServer::listenTCP(int back_log){
  * This function returns a dedicated socket descriptor to               *
  * communicate with the client                                          *
  ************************************************************************/
-void TCPServer::acceptTCP(){
-    while(true) {
+void TCPServer::acceptTCP() {
+    while (true) {
         struct sockaddr_in client;
         unsigned int addr_len = sizeof(client);
         t_client_sock = accept(server_socket, (struct sockaddr *) &client,
@@ -94,52 +94,44 @@ void TCPServer::acceptTCP(){
 }
 
 
-
 /************************************************************************
 * This function receives data from the client and returns it            *
 * as a string to the main program                                       *
 ************************************************************************/
-void* TCPServer::connectionHandler(void *sock_desc) {
-    string line;
-    ifstream backUpFile;
+void *TCPServer::connectionHandler(void *sock_desc) {
     bool inUse = false;
     int read_size;
     char client_message[BUFFER_SIZE];
-    int clientSock = *(int*)sock_desc;
+    int clientSock = *(int *) sock_desc;
     pthread_mutex_t lock;
     ofstream backFile;
-    static Cinema* cinema = NULL;
-    Inputs* myInputs = new Inputs();
+    static Cinema *cinema = NULL;
+    Inputs *myInputs = new Inputs();
     // lock initialization
     if (pthread_mutex_init(&lock, NULL) != 0) {
         cout << "error creating lock" << endl;
     }
-    if(cinema == NULL){
-        if(checkFile()){
-            backUpFile.open("backup.txt");
-           while(getline(backUpFile, line)){
-               if (!inUse) {
-                   // lock
-                   pthread_mutex_lock(&lock);
-                   if (!inUse) {
-                       cinema = Cinema::getInstance();
-                       inUse = true;
-                   }
-                   //Release lock
-                   pthread_mutex_unlock(&lock);
-               }
-               vector<string> vecFromFile = myInputs->getInputVector(line);
-               cinema->runCinema(vecFromFile);
-           }
-        }
-        else {
+    //This will check if this is the first time that cinema has been created
+    if (cinema == NULL) {
+        if (checkFile()) {
+            if (!inUse) {
+                // lock
+                pthread_mutex_lock(&lock);
+                if (!inUse) {
+                    cinema = Cinema::getInstance();
+                    restoreServer(cinema);
+                    inUse = true;
+                }
+                //Release lock
+                pthread_mutex_unlock(&lock);
+            }
         }
     }
     //Lock initialization
     if (pthread_mutex_init(&lock, NULL) != 0) {
         cout << "error locking" << endl;
     }
-    while(true){
+    while (true) {
         if (!inUse) {
             // lock
             pthread_mutex_lock(&lock);
@@ -150,7 +142,7 @@ void* TCPServer::connectionHandler(void *sock_desc) {
             // release lock
             pthread_mutex_unlock(&lock);
         }
-        read_size = recv(clientSock , client_message , BUFFER_SIZE , 0);
+        read_size = recv(clientSock, client_message, BUFFER_SIZE, 0);
 
         //Set end of string marker
         client_message[read_size] = '\0';
@@ -163,23 +155,56 @@ void* TCPServer::connectionHandler(void *sock_desc) {
         string result = cinema->runCinema(usrInput);
         //If the function returned Success
         //Then open this backup file and add in the input line
-        if(result == "Success"){
-            backFile.open("backup.txt", ios::app);
-            backFile << str << '\n';
-            backFile.close();
+        if (result == "Success") {
+            writeToFile(str);
         }
 
-        char* res = new char[BUFFER_SIZE];
+        char *res = new char[BUFFER_SIZE];
         res[result.size()] = 0;
         memcpy(res, result.c_str(), result.size());
 
         //Send the message back to client
-        write(clientSock , res , result.size()+ 1);
+        write(clientSock, res, result.size() + 1);
 
         //clear the message buffer
         memset(client_message, 0, 2000);
     }
 }
+
+
+/************************************************************************
+* This function will restore the contents of the the server             *
+* from the backup text file                                             *
+************************************************************************/
+void TCPServer::restoreServer(void *ptrCinema) {
+    //Deceleration of variables
+    bool inUse = false;
+    Cinema *cinema = (Cinema *) ptrCinema;
+    Inputs *myInputs = new Inputs();
+    pthread_mutex_t lock;
+    ifstream file;
+    string line;
+
+    //Initialize the mutex
+    if (pthread_mutex_init(&lock, NULL) != 0) {
+        cout << "error creating lock" << endl;
+    }
+
+    //Opens the file and will read line by line and upload restore
+    //the Server
+    file.open("backup.txt");
+    while (getline(file, line)) {
+        if(!inUse) {
+            pthread_mutex_lock(&lock);
+            if(!inUse){
+                vector<string> vecFromFile = myInputs->getInputVector(line);
+                cinema->runCinema(vecFromFile);
+                inUse = true;
+            }
+        }
+    }
+}
+
 
 
 /************************************************************************
@@ -190,10 +215,10 @@ string TCPServer::receiveTCP() {
     char buffer[BUFFER_SIZE];
     int read_bytes = recv(t_client_sock, buffer, BUFFER_SIZE, 0);
 
-    if(read_bytes <= 0){
+    if (read_bytes <= 0) {
         cout << "Error reading bytes" << endl;
     }
-    else{
+    else {
         buffer[read_bytes] = '\0';
         string str(buffer);
         //This will clear the buffer in order to receive the next input
@@ -208,22 +233,20 @@ string TCPServer::receiveTCP() {
 ************************************************************************/
 void TCPServer::sendTCP(char *data, unsigned int data_len, int clientSocket) {
     int sent_bytes = send(clientSocket, data, data_len, 0);
-    if(sent_bytes < 0){
+    if (sent_bytes < 0) {
         perror("error sending to client\n");
     }
 }
 
 
-string TCPServer::readFromFile(){
-    ifstream infile("backup.txt");
-
-
-
-}
-void TCPServer::writeToFile(string str){
-    ofstream myfile;
-    myfile.open("backup.txt", ios::app);
-    myfile << str;
+/************************************************************************
+* This function will write the received string to the backup file        *
+************************************************************************/
+void TCPServer::writeToFile(string str) {
+    ofstream backFile;
+    backFile.open("backup.txt", ios::app);
+    backFile << str << '\n';
+    backFile.close();
 }
 
 
@@ -232,11 +255,11 @@ void TCPServer::writeToFile(string str){
  * then it will return TRUE, else it will create the text file and      *
  * return true                                                          *
 ************************************************************************/
-bool TCPServer::checkFile(){
-    if(ifstream("backup.txt")){
+bool TCPServer::checkFile() {
+    if (ifstream("backup.txt")) {
         return true;
     }
-    else{
+    else {
         ofstream myFile("backup.txt");
         myFile.close();
         return false;

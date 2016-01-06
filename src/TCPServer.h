@@ -76,11 +76,24 @@ public:
 	 ************************************************************************/
     static std::string receiveTCP();
 
+
+    /************************************************************************
+	 * This function will write info to the backup txt file                 *
+	 ************************************************************************/
     static void writeToFile(std::string str);
 
-    static std::string readFromFile();
 
+    /************************************************************************
+	 * ThThis will check if the file exists                                 *
+	 ************************************************************************/
     static bool checkFile();
+
+
+    /************************************************************************
+	 * This function will restore the info from the backup file             *
+     * to the new server                                                    *
+	 ************************************************************************/
+    static void restoreServer(void* ptrCinema);
 
 };
 
