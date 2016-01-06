@@ -24,6 +24,7 @@ private:
 	std::vector<std::string> mGenre;
 	std::string mSummary;
 	std::vector<Professionals*> mProfessionals;
+    std::string imageLink;
 
 
 public:
@@ -32,7 +33,7 @@ public:
 	 * necessary attributes													*
 	 ************************************************************************/
 	Movie(std::string code, std::string name, int len, int year, double rating,
-			std::string sum);
+			std::string link, std::string sum);
 
 	/************************************************************************
 	 * This function will print the movie									*
@@ -69,46 +70,15 @@ public:
 	 ************************************************************************/
 	std::string getMovieName();
 
-
 	/************************************************************************
 	 * This Function adds a genre to the current Movie						*
 	 ************************************************************************/
 	std::string addGenre(std::string newGenre, int flag);
 
-
+    /************************************************************************
+	 * This function checks the genre list if the genre is already inside   *
+	 ************************************************************************/
 	bool checkGenre(std::string genre);
-
-	/************************************************************************
-	 *This function returns themovie`s date                                 *
-	 ***********************************************************************/
-	int getYear ();
-
-	/************************************************************************
-	 *This function returns the duration in minutes of the movie            *
-	 ***********************************************************************/
-	int getLength ();
-
-	/************************************************************************
-	 *This function returns the rate of the movie                           *
-	 ***********************************************************************/
-	double getRating ();
-
-	/************************************************************************
-	 *This function returns the summary of the movie                        *
-	 ***********************************************************************/
-
-	std::string getSummary ();
-
-	/************************************************************************
-	 *This function returns all genres of the movie                         *
-	 ***********************************************************************/
-	std::vector<std::string> getGenreList ();
-
-
-	/***********************************************************************
-	 *This function returns the vector of the Genres                      *
-	 ***********************************************************************/
-	std::vector<Professionals*> getProList();
 
 
 	int getProListSize();

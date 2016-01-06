@@ -15,12 +15,13 @@ using namespace std;
  * This is the constructor for the Movie Object Class					*
  ************************************************************************/
 Movie::Movie(string code, string name, int len, int year, double rating,
-		string description){
+		string link, string description){
 	this->mCode = code;
 	this->mName = name;
 	this->mLength = len;
 	this->mYear = year;
 	this->mRating = rating;
+    this->imageLink = link;
 	this->mSummary = description;
 }
 
@@ -128,7 +129,7 @@ string Movie::addGenre(string newGenre, int flag){
 
 	//Starts printing the first part of the movie members
 	string print = mCode + " " + mName + " " + strLen + " "
-			+ strYear  + " " + rating + " ";
+			+ strYear  + " " + rating + " " + imageLink + " ";
 
 	if(mGenre.size() == 1){
 		print = print + mGenre.at(0) + " ";
@@ -230,20 +231,6 @@ string Movie::printAllPros(){
 		return print;
 }
 
-/************************************************************************
- * This function will return the movie name Member 						*
- ************************************************************************/
-string Movie::getMovieName(){
-	return this->mName;
-}
-
-/************************************************************************
- * This function will return the list of Professionals associated		*
- * with the Movie														*
- ************************************************************************/
-vector<Professionals*> Movie::getProList(){
-	return mProfessionals;
-}
 
 /************************************************************************
  * Returns the code of a movie											*
@@ -252,46 +239,9 @@ string Movie::getCode(){
 	return mCode;
 }
 
-
 /************************************************************************
- *This function returns the movie`s date								*
- ***********************************************************************/
-int Movie::getYear (){
-	return mYear;
-}
-
-/************************************************************************
- *This function returns the duration in minutes of the movie            *
- ***********************************************************************/
-int Movie::getLength (){
-	return mLength;
-}
-
-/************************************************************************
- *This function returns the rating of the movie							*
- ***********************************************************************/
-double Movie::getRating (){
-	return mRating;
-}
-
-
-/************************************************************************
- *This function returns the summary of the Movie						*
- ***********************************************************************/
-string Movie::getSummary (){
-	return mSummary;
-}
-
-
-
-/************************************************************************
- *This function returns the list of Genres of the Movie					*
- ***********************************************************************/
-vector<string> Movie::getGenreList (){
-	return mGenre;
-}
-
-
+* This returns the size of the list of professionals                    *
+************************************************************************/
 int Movie::getProListSize(){
 	return mProfessionals.size();
 }
