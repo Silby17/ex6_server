@@ -122,29 +122,18 @@ string Cinema::runCinema(vector<string> inputVec){
 
 
 /************************************************************************
- * This function sends a string to server and server prints it out.     *
- ************************************************************************/
-void Cinema::printStringByServer(string printMe) {
-    //char *y1 = new char[printMe.length() + 1];
-    // strcpy(y1, printMe.c_str());
-
-    //this->tcpServer->sendTCP(y1, BUFFER_SIZE);
-}
-
-
-/************************************************************************
  * 1) This function will create a new movie by receiving all the		*
  * necessary parameters of a movie										*
  ************************************************************************/
 string Cinema::addMovie(vector<string> inputVector){
     //Deceleration of variables
-    string code, name, description;
+    string code, name, description, imageLink;
     int len, year, size;
     double rating;
+
     code = inputVector.at(1);
     size = inputVector.size();
     string ans;
-
     len = atoi(inputVector.at(3).c_str());
 
     //Checks if the movie Exists
@@ -158,10 +147,10 @@ string Cinema::addMovie(vector<string> inputVector){
         name = inputVector.at(2);
         year = atoi(inputVector.at(4).c_str());
         rating = atof(inputVector.at(5).c_str());
-
+        imageLink = inputVector.at(6);
         //Pieces together the description
         stringstream ss;
-        for(int i = 6; i < size; i++){
+        for(int i = 7; i < size; i++){
             ss << inputVector.at(i);
             if(i < size - 1){
                 ss << " ";
@@ -170,7 +159,7 @@ string Cinema::addMovie(vector<string> inputVector){
         description = ss.str();
         int vectorSize = movies.size();
         //Creates the the movie
-        Movie tempMovie(code, name, len, year, rating, description);
+        Movie tempMovie(code, name, len, year, rating, imageLink, description);
         //Add movie to the list
         movies.push_back(tempMovie);
         //Checks that the Movie was added to the list
@@ -324,7 +313,7 @@ string Cinema::sortPros(string code, int sortOption){
     else {
         ans = "Failure";
     }
-    printStringByServer(ans);
+    return ans;
 }
 
 
@@ -575,22 +564,6 @@ string Cinema::printMovieByGenre(string genre){
         ans = "Failure";
     }
     return ans;
-}
-
-
-/************************************************************************
- * Returns the List of movies											*
- ************************************************************************/
-vector<Movie> Cinema::getMovieList(){
-    return movies;
-}
-
-
-/************************************************************************
- * Returns the list of Professionals									*
- ************************************************************************/
-vector<Professionals*> Cinema::getProList(){
-    return proPtrList;
 }
 
 

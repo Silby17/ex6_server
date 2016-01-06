@@ -13,6 +13,7 @@
 #include "Professionals.h"
 #include "TCPServer.h"
 
+
 class Cinema{
 private:
 	/************************************************************************
@@ -26,6 +27,7 @@ private:
 	std::vector<std::string> usrInput;
 	Inputs myInputs;
 
+
 public:
 	/************************************************************************
  	* This function returns an instance of cinema, null if was bulid	    *
@@ -38,10 +40,6 @@ public:
  	************************************************************************/
 	bool Occupy();
 
-	/************************************************************************
- 	 * THis function sends a string to server and server prints it out.     *
- 	************************************************************************/
-	void printStringByServer(std::string printMe);
 
 	/************************************************************************
 	 * This function will start the running of the Program					*
@@ -140,18 +138,6 @@ public:
 	 * Prints the professionals of a certain movie given by the Movie Code	*
 	 ************************************************************************/
     std::string printProsOfMovie(std::string code);
-
-
-	/************************************************************************
-	 * Returns the List of movies											*
-	 ************************************************************************/
-	std::vector<Movie> getMovieList();
-
-
-	/************************************************************************
-	 * Returns the list of Professionals									*
-	 ************************************************************************/
-	std::vector<Professionals*> getProList();
 
 
 	/************************************************************************
