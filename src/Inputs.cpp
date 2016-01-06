@@ -63,7 +63,7 @@ vector<string> Inputs::getInputVector(string input){
  * This function checks if the number provided is a negative number		*
  * if it is it returns false, if it is than it returns true				*
  ************************************************************************/
-bool Inputs::checkNegatvie(int n){
+bool Inputs::checkNegative(int n){
 	if(n < 0){
 		return false;
 	}
