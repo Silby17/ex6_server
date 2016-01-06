@@ -22,7 +22,6 @@ Screenwriter::Screenwriter(int type, int id, int age, std::string desc,
  * This function prints the Screenwriter in its correct Format			*
  ************************************************************************/
 string Screenwriter::printInfo(){
-	//cout << this->getName() << this->getJobDescription()<< endl;
 	string output = this->getName() + this->getJobDescription();
 	return output;
 }
