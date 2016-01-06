@@ -3,18 +3,17 @@
 * Exercise 5							*
 * File: TCPServer.cpp					*
 ****************************************/
+#include <fstream>
 #include "TCPServer.h"
 #include "Cinema.h"
 
 int TCPServer::server_socket;
 int TCPServer::t_client_sock;
-//Cinema* TCPServer::cinema;
 
 /************************************************************************
  * This is the TCPServer Class constructor		        				*
  ************************************************************************/
 TCPServer::TCPServer(int port){
-  //  inUse = false;
     newSocket();
     bindTCP(port);
     listenTCP(2);
@@ -101,6 +100,17 @@ void TCPServer::acceptTCP(){
 ************************************************************************/
 void* TCPServer::connectionHandler(void *sock_desc) {
     static Cinema* cinema = NULL;
+    if(cinema == NULL){
+        if(checkFile()){
+            cout << "File Exists" << endl;
+        }
+        else {
+            cout << "File created" << endl;
+        }
+    }
+    else if (cinema != NULL) {
+        cout << "already a cinma" << endl;
+    }
     bool inUse = false;
     int read_size;
     char client_message[BUFFER_SIZE];
@@ -112,7 +122,6 @@ void* TCPServer::connectionHandler(void *sock_desc) {
     if (pthread_mutex_init(&lock, NULL) != 0) {
         // error
     }
-
     while(true){
         if (!inUse) {
             // lock
@@ -178,5 +187,34 @@ void TCPServer::sendTCP(char *data, unsigned int data_len, int clientSocket) {
     if(sent_bytes < 0){
         perror("error sending to client\n");
     }
+}
 
+
+string TCPServer::readFromFile(){
+    ifstream infile("backup.txt");
+
+
+
+}
+void TCPServer::writeToFile(string str){
+    ofstream myfile;
+    myfile.open("backup.txt", ios::app);
+    myfile << str;
+}
+
+
+/************************************************************************
+* This function will check if the backup file exists, if it does        *
+ * then it will return TRUE, else it will create the text file and      *
+ * return true                                                          *
+************************************************************************/
+bool TCPServer::checkFile(){
+    if(ifstream("backup.txt")){
+        return true;
+    }
+    else{
+        ofstream myfile("backup.txt");
+        myfile.close();
+        return false;
+    }
 }
