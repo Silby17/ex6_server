@@ -9,4 +9,4 @@ set(SOURCE_FILES src/main.cpp src/Cinema.cpp src/Actor.cpp src/AgeCompare.cpp
         src/Movie.cpp src/Producer.cpp src/Professionals.cpp
         src/Screenwriter.cpp src/TCPServer.cpp)
 
-add_executable(Exercise_4 ${SOURCE_FILES})
+add_executable(ex6_server ${SOURCE_FILES})
