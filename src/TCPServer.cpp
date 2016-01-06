@@ -5,7 +5,6 @@
 ****************************************/
 #include <fstream>
 #include "TCPServer.h"
-#include "Cinema.h"
 
 int TCPServer::server_socket;
 int TCPServer::t_client_sock;
@@ -127,10 +126,7 @@ void *TCPServer::connectionHandler(void *sock_desc) {
             }
         }
     }
-    //Lock initialization
-    if (pthread_mutex_init(&lock, NULL) != 0) {
-        cout << "error locking" << endl;
-    }
+
     while (true) {
         if (!inUse) {
             // lock
@@ -208,7 +204,6 @@ void TCPServer::restoreServer(void *ptrCinema) {
         cinema->runCinema(vecFromFile);
     }
 }
-
 
 
 /************************************************************************
