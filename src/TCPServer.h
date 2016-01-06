@@ -76,6 +76,12 @@ public:
 	 ************************************************************************/
     static std::string receiveTCP();
 
+    static void writeToFile(std::string str);
+
+    static std::string readFromFile();
+
+    static bool checkFile();
+
 };
 
 #endif
