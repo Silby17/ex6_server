@@ -1,6 +1,6 @@
 /****************************************
  * Yossi Silberhaft & Nava Shemoul		*
- * Exercise 5							*
+ * Exercise 6							*
  * File: Inputs.cpp						*
  ****************************************/
 #include "Inputs.h"

@@ -1,6 +1,6 @@
 /****************************************
-* Yossi Silberhaft & Nava Shemoul						*
-* Exercise 1							*
+* Yossi Silberhaft & Nava Shemoul		*
+* Exercise 6							*
 * FIle: Screenwrite.h					*
 ****************************************/
 #ifndef SCREENWRITER_H

@@ -1,7 +1,7 @@
 /****************************************
- * Yossi Silberhaft & Nava Shemoul						*
- * Exercise 1							*
- * File: Movie.h							*
+ * Yossi Silberhaft & Nava Shemoul		*
+ * Exercise 6							*
+ * File: Movie.h						*
  ****************************************/
 #ifndef MOVIE_H
 #define MOVIE_H

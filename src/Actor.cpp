@@ -1,6 +1,6 @@
 /****************************************
- * Yossi Silberhaft & Nava Shemoul						*
- * Exercise 5							*
+ * Yossi Silberhaft & Nava Shemoul      *
+ * Exercise 6							*
  * File: Actor.cpp						*
  ****************************************/
 #include "Actor.h"

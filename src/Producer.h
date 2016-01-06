@@ -1,6 +1,6 @@
 /****************************************
- * Yossi Silberhaft & Nava Shemoul						*
- * Exercise 1							*
+ * Yossi Silberhaft & Nava Shemoul		*
+ * Exercise 6							*
  * File: Producer.h						*
  ****************************************/
 #ifndef PRODUCER_H

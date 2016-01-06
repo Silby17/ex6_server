@@ -1,7 +1,7 @@
 /****************************************
- * Yossi Silberhaft & Nava Shemoul						*
- * Exercise 1							*
- * File: Professionals.h					*
+ * Yossi Silberhaft & Nava Shemoul		*
+ * Exercise 6							*
+ * File: Professionals.h  				*
  ****************************************/
 #ifndef PROFESSIONALS_H
 #define PROFESSIONALS_H
@@ -38,7 +38,7 @@ public:
 
 
 	/************************************************************************
-	 * Returns the ID of a professional				*
+	 * Returns the ID of a professional				                        *
 	 ************************************************************************/
 	virtual int getID() const;
 

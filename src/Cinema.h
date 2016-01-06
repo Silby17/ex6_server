@@ -1,6 +1,6 @@
 /****************************************
  * Yossi Silberhaft & Nava Shemoul		*
- * Exercise 5							*
+ * Exercise 6							*
  * FIle: Cinema.h						*
  ****************************************/
 #ifndef CINEMA_H
