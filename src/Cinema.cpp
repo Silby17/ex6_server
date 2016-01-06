@@ -26,7 +26,7 @@ Cinema::Cinema()
 
 
 /************************************************************************
- * This function returns an instance of cinema, null if was bulid	    *
+ * This function returns an instance of cinema, null if was build	    *
  ************************************************************************/
 Cinema* Cinema::getInstance()
 {
@@ -459,7 +459,7 @@ string Cinema::removeProfessional(int id){
             vector<Movie>::iterator it;
             for(it = movies.begin(); it != movies.end(); it++){
                 if(it->getProIndex(id) != -1){
-                    string result = it->removePro(id, 0);
+                    result = it->removePro(id, 0);
                 }
             }
         }

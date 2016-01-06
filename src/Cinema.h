@@ -30,7 +30,7 @@ private:
 
 public:
 	/************************************************************************
- 	* This function returns an instance of cinema, null if was bulid	    *
+ 	* This function returns an instance of cinema, null if was build	    *
  	************************************************************************/
 	static Cinema* getInstance();
 
