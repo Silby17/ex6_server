@@ -1,6 +1,6 @@
 /****************************************
 * Yossi Silberhaft & Nava Shemoul		*
-* Exercise 5							*
+* Exercise 6							*
 * File: TCPServer.h 					*
 ****************************************/
 #ifndef EXERCISE_4_TCPSERVER_H
@@ -17,6 +17,7 @@
 #include "Cinema.h"
 #include "Inputs.h"
 #define BUFFER_SIZE 4096
+
 using namespace std;
 
 class TCPServer{
@@ -25,7 +26,6 @@ private:
     static int server_socket;
     static int t_client_sock;
     static void *connectionHandler(void *sock_desc);
-
 public:
 
     /************************************************************************

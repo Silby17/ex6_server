@@ -94,33 +94,50 @@ void TCPServer::acceptTCP(){
 }
 
 
+
 /************************************************************************
 * This function receives data from the client and returns it            *
 * as a string to the main program                                       *
 ************************************************************************/
 void* TCPServer::connectionHandler(void *sock_desc) {
-    static Cinema* cinema = NULL;
-    if(cinema == NULL){
-        if(checkFile()){
-            cout << "File Exists" << endl;
-        }
-        else {
-            cout << "File created" << endl;
-        }
-    }
-    else if (cinema != NULL) {
-        cout << "already a cinma" << endl;
-    }
+    string line;
+    ifstream backUpFile;
     bool inUse = false;
     int read_size;
     char client_message[BUFFER_SIZE];
     int clientSock = *(int*)sock_desc;
-    Inputs* myInputs = new Inputs();
     pthread_mutex_t lock;
-
+    ofstream backFile;
+    static Cinema* cinema = NULL;
+    Inputs* myInputs = new Inputs();
     // lock initialization
     if (pthread_mutex_init(&lock, NULL) != 0) {
-        // error
+        cout << "error creating lock" << endl;
+    }
+    if(cinema == NULL){
+        if(checkFile()){
+            backUpFile.open("backup.txt");
+           while(getline(backUpFile, line)){
+               if (!inUse) {
+                   // lock
+                   pthread_mutex_lock(&lock);
+                   if (!inUse) {
+                       cinema = Cinema::getInstance();
+                       inUse = true;
+                   }
+                   //Release lock
+                   pthread_mutex_unlock(&lock);
+               }
+               vector<string> vecFromFile = myInputs->getInputVector(line);
+               cinema->runCinema(vecFromFile);
+           }
+        }
+        else {
+        }
+    }
+    //Lock initialization
+    if (pthread_mutex_init(&lock, NULL) != 0) {
+        cout << "error locking" << endl;
     }
     while(true){
         if (!inUse) {
@@ -144,6 +161,13 @@ void* TCPServer::connectionHandler(void *sock_desc) {
         vector<string> usrInput = myInputs->getInputVector(str);
         //Sends the vector to the main server funciton
         string result = cinema->runCinema(usrInput);
+        //If the function returned Success
+        //Then open this backup file and add in the input line
+        if(result == "Success"){
+            backFile.open("backup.txt", ios::app);
+            backFile << str << '\n';
+            backFile.close();
+        }
 
         char* res = new char[BUFFER_SIZE];
         res[result.size()] = 0;
@@ -213,8 +237,8 @@ bool TCPServer::checkFile(){
         return true;
     }
     else{
-        ofstream myfile("backup.txt");
-        myfile.close();
+        ofstream myFile("backup.txt");
+        myFile.close();
         return false;
     }
 }
