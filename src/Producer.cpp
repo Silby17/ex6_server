@@ -24,7 +24,6 @@ Producer::Producer(int type, int id, int age, string desc,
 std::string Producer::printInfo(){
 	string fullOutput = this->getName();
 	return fullOutput;
-	//cout << fullOutput << endl;
 }
 
 
