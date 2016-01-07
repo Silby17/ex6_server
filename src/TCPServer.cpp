@@ -49,7 +49,7 @@ void TCPServer::bindTCP(unsigned int server_port) {
     server.sin_port = htons(server_port);
 
     //Binds a socket to a port number
-    if (bind(server_socket, (struct sockaddr *) &server, sizeof(server)) < 0) {
+    if (bind(server_socket, (struct sockaddr *) &server, sizeof(server)) < 0){
         perror("error binding socket\n");
         //Exit the program if there is an error binding
         exit(1);
@@ -103,7 +103,6 @@ void *TCPServer::connectionHandler(void *sock_desc) {
     char client_message[BUFFER_SIZE];
     int clientSock = *(int *) sock_desc;
     pthread_mutex_t lock;
-    ofstream backFile;
     static Cinema *cinema = NULL;
     Inputs *myInputs = new Inputs();
     // lock initialization
@@ -139,6 +138,11 @@ void *TCPServer::connectionHandler(void *sock_desc) {
             pthread_mutex_unlock(&lock);
         }
         read_size = recv(clientSock, client_message, BUFFER_SIZE, 0);
+        //If one of the clients enter in -1, then we will just break the
+        // while loop and carry on with the running of the server
+        if(client_message[0] == '-' && client_message[1] == '1'){
+            break;
+        }
 
         //Set end of string marker
         client_message[read_size] = '\0';
