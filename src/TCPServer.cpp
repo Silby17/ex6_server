@@ -149,16 +149,19 @@ void *TCPServer::connectionHandler(void *sock_desc) {
 
         //Convert the message to string
         string str(client_message);
+
         //Convects the input string from the client to a string vector
         vector<string> usrInput = myInputs->getInputVector(str);
+
         //Sends the vector to the main server function
         string result = cinema->runCinema(usrInput);
+
         //If the function returned Success
         //Then open this backup file and add in the input line
         if (result == "Success") {
             writeToFile(str);
         }
-
+        //result.append("\n");
         char *res = new char[BUFFER_SIZE];
         res[result.size()] = 0;
         memcpy(res, result.c_str(), result.size());
@@ -248,7 +251,7 @@ void TCPServer::sendTCP(char *data, unsigned int data_len, int clientSocket) {
 void TCPServer::writeToFile(string str) {
     ofstream backFile;
     backFile.open("backup.txt", ios::app);
-    backFile << str << '\n';
+    backFile << str;
     backFile.close();
 }
 
